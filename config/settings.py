@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
 
     "users",
+    "habit",
 ]
 
 MIDDLEWARE = [
@@ -201,3 +202,5 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': timedelta(days=1),
     },
 }
+
+NULLABLE = {'blank': True, 'null': True}
