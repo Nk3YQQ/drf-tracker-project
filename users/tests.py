@@ -1,14 +1,14 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from users.services import create_user, create_other_user
+from users.services import create_other_user, create_user
 
 
 class UserAPITestCase(APITestCase):
-    """ Тестирование модели пользователя """
+    """Тестирование модели пользователя"""
 
     def setUp(self) -> None:
-        """ Установка данных """
+        """Установка данных"""
 
         user = create_user()
         other_user = create_other_user()
@@ -31,81 +31,45 @@ class UserAPITestCase(APITestCase):
         self.patch_data = {"first_name": "Test1"}
 
     def test_user_retrieve(self):
-        """ Тестирование просмотра пользователя """
+        """Тестирование просмотра пользователя"""
 
-        response = self.client.get(
-            f'/users/{self.user.pk}/',
-            headers=self.header
-        )
+        response = self.client.get(f"/users/{self.user.pk}/", headers=self.header)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK
-        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_retrieve_for_other_user(self):
-        """ Тестирование просмотра пользователя для другого пользователя"""
+        """Тестирование просмотра пользователя для другого пользователя"""
 
-        response = self.client.get(
-            f'/users/{self.user.pk}/',
-            headers=self.other_user_header
-        )
+        response = self.client.get(f"/users/{self.user.pk}/", headers=self.other_user_header)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK
-        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_update(self):
-        """ Тестирование обновления пользователя """
+        """Тестирование обновления пользователя"""
 
-        response = self.client.patch(
-            f'/users/edit/{self.user.pk}/',
-            data=self.patch_data,
-            headers=self.header
-        )
+        response = self.client.patch(f"/users/edit/{self.user.pk}/", data=self.patch_data, headers=self.header)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK
-        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_update_for_other_user(self):
-        """ Тестирование обновления пользователя для другого пользователя"""
+        """Тестирование обновления пользователя для другого пользователя"""
 
         response = self.client.patch(
-            f'/users/edit/{self.user.pk}/',
-            data=self.patch_data,
-            headers=self.other_user_header
+            f"/users/edit/{self.user.pk}/", data=self.patch_data, headers=self.other_user_header
         )
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_403_FORBIDDEN
-        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_destroy(self):
-        """ Тестирование удаление пользователя """
+        """Тестирование удаление пользователя"""
 
-        response = self.client.delete(
-            f'/users/destroy/{self.user.pk}/',
-            headers=self.header
-        )
+        response = self.client.delete(f"/users/destroy/{self.user.pk}/", headers=self.header)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_204_NO_CONTENT
-        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_destroy_for_other_user(self):
-        """ Тестирование удаление пользователя для другого пользователя """
+        """Тестирование удаление пользователя для другого пользователя"""
 
-        response = self.client.delete(
-            f'/users/destroy/{self.user.pk}/',
-            headers=self.other_user_header
-        )
+        response = self.client.delete(f"/users/destroy/{self.user.pk}/", headers=self.other_user_header)
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_403_FORBIDDEN
-        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
