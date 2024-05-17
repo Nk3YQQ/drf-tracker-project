@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from habit.models import Habit
 from habit.paginators import HabitPaginator
 from habit.serializers import HabitSerializer
-from users.permissions import IsOwner, IsOwnerOrReadOnly
+from habit.permissions import IsOwner, IsOwnerOrReadOnly
 
 
 class HabitCreateAPIView(generics.CreateAPIView):
@@ -36,8 +36,12 @@ class HabitPublicListAPIView(HabitListAPIView):
 class HabitPrivateListAPIView(HabitListAPIView):
     """Чтение всех приватных привычек"""
 
-    queryset = Habit.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Habit.objects.filter(user=user)
+        return queryset
 
 
 class HabitRetrieveAPIView(generics.RetrieveAPIView):
@@ -53,9 +57,8 @@ class HabitPublicRetrieveAPIView(HabitRetrieveAPIView):
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
 
-class HabitPrivateRetrieveAPIView(HabitListAPIView):
+class HabitPrivateRetrieveAPIView(HabitRetrieveAPIView):
     """Чтение одной приватной привычки"""
-
     queryset = Habit.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
 
