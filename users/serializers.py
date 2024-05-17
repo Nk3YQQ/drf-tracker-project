@@ -23,3 +23,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """ Сериализатор для пользователей """
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'tg_username')
