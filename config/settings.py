@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "redis",
+    "corsheaders",
 
     'crispy_forms',
     'crispy_bootstrap5',
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -204,3 +206,8 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 NULLABLE = {'blank': True, 'null': True}
+
+# Corsheader settings
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS").split(" ")
+CSRF_TRUSTED_ORIGINS = os.getenv("CORS_ORIGINS").split(" ")
+CORS_ALLOW_ALL_ORIGINS = bool(int(os.getenv("CORS_ALLOW_ALL_ORIGINS")))
