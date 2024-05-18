@@ -42,11 +42,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "drf-yasg",
+    "drf_spectacular",
 
     "rest_framework",
     "redis",
     "corsheaders",
+    "django_celery_beat",
 
     'crispy_forms',
     'crispy_bootstrap5',
@@ -159,7 +160,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
 SIMPLE_JWT = {
@@ -199,15 +201,39 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # Celery-beat settings
 CELERY_BEAT_SCHEDULE = {
-    'user-active-task': {
-        'task': 'users.tasks.check_user_for_active',
+    'send_message_for_oneday': {
+        'task': 'habit.tasks.notify_users_with_oneday_habit',
         'schedule': timedelta(days=1),
+    },
+    'send_message_for_weekly': {
+        'task': 'habit.tasks.notify_users_with_weekly_habit',
+        'schedule': timedelta(weeks=1),
     },
 }
 
 NULLABLE = {'blank': True, 'null': True}
 
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
+EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS')))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
 # Corsheader settings
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ORIGINS").split(" ")
 CSRF_TRUSTED_ORIGINS = os.getenv("CORS_ORIGINS").split(" ")
 CORS_ALLOW_ALL_ORIGINS = bool(int(os.getenv("CORS_ALLOW_ALL_ORIGINS")))
+
+# Telegram Bot settings
+API_TOKEN = os.getenv("API_TOKEN")
+BOT_NAME = os.getenv("BOT_NAME")
+
+# drf-spectacular settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Habit API',
+    'DESCRIPTION': 'Habit API for other apps!',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}

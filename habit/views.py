@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
@@ -13,6 +14,7 @@ class HabitCreateAPIView(generics.CreateAPIView):
     serializer_class = HabitSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
+    @extend_schema(description='Добавление пользователя в модель привычки')
     def perform_create(self, serializer):
         habit = serializer.save()
         habit.user = self.request.user
@@ -38,6 +40,7 @@ class HabitPrivateListAPIView(HabitListAPIView):
 
     permission_classes = [IsAuthenticated, IsOwner]
 
+    @extend_schema(description='Фильтрация привычек по пользователю')
     def get_queryset(self):
         user = self.request.user
         queryset = Habit.objects.filter(user=user)

@@ -9,7 +9,6 @@ def create_user():
         first_name="Test",
         last_name="Testov",
         email="test.testov@mail.ru",
-        tg_username="Test_name",
         password=make_password("123qwe456rty"),
         is_active=True,
     )
@@ -21,7 +20,6 @@ def create_other_user():
         first_name="Ivan",
         last_name="Ivanov",
         email="ivan.ivanov@mail.ru",
-        tg_username="ivan_name",
         password=make_password("123qwe456rty"),
         is_active=True,
     )

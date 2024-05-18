@@ -12,7 +12,8 @@ class Periodicity(models.TextChoices):
 class Habit(models.Model):
     """Модель привычки"""
 
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, **settings.NULLABLE, verbose_name="Пользователь")
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, **settings.NULLABLE,
+                             verbose_name="Пользователь", related_name='habits')
     place = models.CharField(max_length=200, verbose_name="Место")
     time = models.TimeField(verbose_name="Время")
     action = models.CharField(max_length=200, verbose_name="Действие")
