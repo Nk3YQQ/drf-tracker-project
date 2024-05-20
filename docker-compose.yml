@@ -12,7 +12,7 @@ services:
   drf:
     build: .
     container_name: drf
-    command:  sh -c "sleep 5 && ./entrypoint.sh"
+    command: sh -c "sleep 5 && ./entrypoint.sh"
     env_file:
       - ./dev/.env.dev
     volumes:
