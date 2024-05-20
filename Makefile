@@ -1,6 +1,9 @@
 docker-compose-run:
 	docker-compose up --build -d
 
+check-db:
+	docker-compose exec pgdb psql -U test -d postgres -c '\l' | grep tracker_db || exit 1
+
 tests:
 	docker-compose exec -T drf python3 manage.py test
 
