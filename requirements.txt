@@ -1,0 +1,16 @@
+Django==4.2
+djangorestframework
+psycopg2-binary
+black
+isort
+flake8
+redis
+celery
+python-dotenv
+djangorestframework-simplejwt
+coverage
+ipython
+django-cors-headers
+django-celery-beat
+python-telegram-bot==13.7.0
+drf-spectacular
