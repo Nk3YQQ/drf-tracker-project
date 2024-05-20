@@ -1,5 +1,5 @@
 docker-compose-run:
-	docker-compose up -d
+	docker-compose up --build -d
 
 tests:
 	docker-compose exec -T drf python3 manage.py test
