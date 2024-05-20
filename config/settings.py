@@ -49,9 +49,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_celery_beat",
 
-    'crispy_forms',
-    'crispy_bootstrap5',
-
     "users",
     "habit",
 ]
@@ -138,14 +135,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = (
-    BASE_DIR / 'static'
-)
-
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 AUTH_USER_MODEL = 'users.User'
 
