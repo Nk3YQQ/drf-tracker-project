@@ -1,3 +1,6 @@
+runserver:
+	python3 manage.py runserver
+
 docker-compose-run:
 	docker-compose up --build -d
 
