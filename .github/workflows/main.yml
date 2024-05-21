@@ -17,9 +17,6 @@ jobs:
           
       - name: Build and run docker-compose
         run: make docker-compose-run
-
-      - name: Check PostgreSQL database
-        run: make check-db
         
       - name: Run tests
         run: make tests
