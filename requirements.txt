@@ -1,5 +1,6 @@
 Django==4.2
 djangorestframework
+gunicorn
 psycopg2-binary
 black
 isort
