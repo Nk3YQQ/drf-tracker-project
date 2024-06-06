@@ -3,7 +3,7 @@ runserver:
 	python3 manage.py runserver 0.0.0.0:8000
 
 user-chmod:
-	sudo usermod -aG docker gitlab-runner
+	sh -c 'sudo usermod -aG docker gitlab-runner'
 
 docker-compose-run:
 	docker-compose up --build -d
