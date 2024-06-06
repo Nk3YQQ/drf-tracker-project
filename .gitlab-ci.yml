@@ -2,6 +2,7 @@ deploy:
   stage: deploy
   script:
     - cp $ENV_STAGE .env
+    - make user-chmod
     - make docker-compose-run
     - make tests
     - make clean-up
