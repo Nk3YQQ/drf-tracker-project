@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   pgdb:
     image: postgres:latest
@@ -6,16 +7,17 @@ services:
     env_file:
       - .env
     volumes:
-      - pgdbdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
   drf:
     build: .
     container_name: drf
-    command: sh -c "sleep 5 && make runserver"
+    command: make runserver
     env_file:
       - .env
     volumes:
-      - .:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
     ports:
       - "8000:8000"
     depends_on:
@@ -46,5 +48,18 @@ services:
     expose:
       - 6379
 
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+    ports:
+      - "80:80"
+    depends_on:
+      - drf
+
 volumes:
-  pgdbdata: null
+  postgres_data:
+  static_volume:
+  media_volume:
