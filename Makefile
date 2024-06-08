@@ -2,9 +2,6 @@ runserver:
 	python3 manage.py migrate --no-input
 	python3 manage.py runserver 0.0.0.0:8000
 
-user-chmod:
-	sh -c 'sudo usermod -aG docker gitlab-runner'
-
 docker-compose-run:
 	docker-compose up --build -d
 
