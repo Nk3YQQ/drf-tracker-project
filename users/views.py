@@ -20,8 +20,8 @@ class UserCreateAPIView(generics.CreateAPIView):
 
         send_mail(
             subject='Добро пожаловать в приложение "E&I Habit Tracker!"',
-            message=f"""Для продолжения регистрации перейдите в наш телеграмм-бот 
-            https://t.me/{settings.BOT_NAME}?start={user.tg_token}""",
+            message=f'Для продолжения регистрации перейдите в наш телеграмм-бот '
+                    f'https://t.me/{settings.BOT_NAME}?start={user.tg_token}',
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[user.email]
         )

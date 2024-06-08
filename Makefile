@@ -10,9 +10,8 @@ tests:
 	docker-compose exec -T drf python3 manage.py test
 
 linters:
-	docker-compose exec -T app flake8 blogapp/
-	docker-compose exec -T app flake8 shopapp/
-	docker-compose exec -T app flake8 users/
+	docker-compose exec -T drf flake8 habit/
+	docker-compose exec -T drf flake8 users/
 
 stop:
 	docker-compose down
