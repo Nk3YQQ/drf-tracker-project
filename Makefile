@@ -28,7 +28,7 @@ celery-beat:
 	celery -A config beat --loglevel=info
 
 bot-run:
-	python3 manage.py bot
+	docker-compose -f docker-compose.prod.yml exec -T drf python3 manage.py bot
 
 install-dependencies:
 	ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --tags "install_dependencies"
