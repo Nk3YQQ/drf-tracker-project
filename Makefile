@@ -35,3 +35,6 @@ install-dependencies:
 
 deploy:
 	ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --tags "deploy"
+
+run:
+	ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --tags "run"
