@@ -22,17 +22,8 @@ jobs:
       - name: Create .env file for tests
         run: echo "ENV_STAGE=${{ secrets.ENV_STAGE }}" > .env
 
-      - name: Build and run docker-compose
-        run: make build-and-run
-
-      - name: Run tests
+      - name: Build, test, lint and clean up project
         run: make tests
-
-      - name: Run linters
-        run: make linters
-
-      - name: Clean up
-        run: make clean-up
 
   deploy:
     runs-on: ubuntu-latest
@@ -51,6 +42,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_HOST }} << 'EOF'
             cd ${{ secrets.PROJECT_PATH }}
             git pull
-            make stop
-            make build-and-run
+            make deploy
           EOF
