@@ -18,6 +18,9 @@ deploy-project:
 	docker-compose -f docker-compose.prod.yml down
 	docker-compose -f docker-compose.prod.yml up --build -d
 
+check-containers:
+	docker-compose -f docker-compose.prod.yml ps
+
 celery-worker:
 	celery -A config worker --loglevel=info
 
