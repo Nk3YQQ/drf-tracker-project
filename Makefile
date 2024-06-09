@@ -14,7 +14,7 @@ tests:
 	docker-compose exec -T drf flake8 users/
 	docker-compose -f docker-compose.yml down --volumes
 
-deploy:
+deploy-project:
 	docker-compose -f docker-compose.prod.yml down
 	docker-compose -f docker-compose.prod.yml up --build -d
 
