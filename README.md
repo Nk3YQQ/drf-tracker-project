@@ -14,12 +14,12 @@ git clone git@github.com:Nk3YQQ/drf-tracker-project.git
 ```
 
 ## 3) Добавьте ansible настройки в проект
-Для начала скачайте ansible на вашу локальную машину
+Для начала скачайте ansible на вашу локальную машину:
 ```
 pip[x] install ansible
 ```
 Далее создайте папку ansible в корне проекта и опишите её по инструкции
-### Структура директории ansible
+### Структура директории ansible:
 ```
 dfr-tracker-project/ # Проект
 ...
@@ -37,12 +37,12 @@ dfr-tracker-project/ # Проект
 ### Подсказка! 
 Используйте файл .env.sample для формирования переменных окружения в файле .env
 
-### Пример для inventory.ini
+### Пример для inventory.ini:
 ```
 [<your_server_group>]
 <your_server> ansible_user=<your_host_user> # Пользователь удалённого сервера
 ```
-### Пример для deploy.yml
+### Пример для deploy.yml:
 ```
 - hosts: <your_server_group> # Передаётся название группы из inventory.ini
   gather_facts: no
@@ -121,9 +121,16 @@ dfr-tracker-project/ # Проект
         dest: "{{ project_path }}"
       tags:
         - deploy
+
+    - name: run project
+      shell:
+        cmd: "make deploy-project"
+      args:
+        chdir: "{{ project_path }}"
+      tags: "run"
 ```
 
-### Пример для nginx.conf.j2
+### Пример для nginx.conf.j2:
 ```
 server {
 
@@ -149,7 +156,7 @@ server {
 }
 ```
 
-### Приме для Dockerfile
+### Пример для Dockerfile
 ```
 FROM nginx:latest
 
@@ -157,17 +164,20 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 ```
 
-После настройки ansible выполните следующую команду
+После настройки ansible выполните следующую команду:
 ```
 make deploy
 ```
 
 ## 4) Запуск проекта
+После полной настройки проекта, необходимо выполнить следующую команду:
+```
+make run
+```
 
+# *Опционально
+Если Вы хотите как-нибудь подстроить проект под себя (например поработать в виртуальном окружении), то следуйте следующим шагам:
 
-
-# Опционально
-Если Вы хотите как-нибудь подстроить проект под себя (например поработать в виртуальном окружении), то следуйте следующим шагам
 ## 1) Настройте виртуального окружения
 
 ### Для pip
@@ -199,25 +209,53 @@ poetry add $(cat requirements.txt)
 
 # Основные команды
 
-## Запуск сервера
+### Запуск сервера (для тестирования)
 ```
 make runserver
 ``` 
 
-## Запуск тестов
+### Запуск тестов (для развёртывания)
 ``` 
+make runserver-prod
+```
+
+### Запуск тестов для github actions
+```
 make tests
 ```
 
-## Запуск телеграм-бота 
+### Установка зависимостей для сервера
+```
+make install-dependencies
+```
 
+### Деплой проекта с ansible
+```
+make deploy
+```
+
+### Деплой проекта с docker-compose
+```
+make deploy-project
+```
+
+### Проверка контейнеров на сервере после запуска проекта
+```
+make check-containers
+```
+
+### Запуск celery и celery-beat
+```
+make celery-worker
+make celery-beat
+```
+
+### Запуск телеграмм бота в контейнере приложения
 ```
 make bot-run
 ```
 
-## Запуск coverage
+### Запуск проекта
 ```
-make coverage
+make run
 ```
-
-Обязательно ознакомитесь с файлом .env.sample, где представлены примеры заполнения переменных окружения.
